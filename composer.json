@@ -1,0 +1,21 @@
+{
+    "name": "thelhc/helpers",
+    "description": "An Authorize.net API client",
+    "authors": [
+        {
+            "name": "Aaron Michael Music",
+            "email": "aaronmichaelmusic@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
