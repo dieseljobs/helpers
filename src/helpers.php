@@ -54,10 +54,13 @@ function client_ip()
  */
 function is_ajax()
 {
+    return request()->ajax();
+    /*
     return (bool)preg_match(
         "#application\/json#i",
         request()->header("content-type")
     );
+    */
 }
 
 /**
@@ -68,9 +71,44 @@ function is_ajax()
  */
 function route_param($key)
 {
-    if (isset(request()->route()->parameters()[$key])) {
+    $route_params = request()->route()->parameters();
+    if (isset($route_params[$key])) {
         return request()->route()->parameters()[$key];
     } else {
         return null;
     }
+}
+
+/**
+ * Get timestamp with microtime
+ *
+ * @return string
+ */
+function timestamp_micro()
+{
+    $t = microtime(true);
+    $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+    $d = new DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+    return $d->format("Y-m-d H:i:s.u");
+}
+
+/**
+ * Get difference (in time) between two DateTime instances
+ *
+ * @param  DateTime $datetime1
+ * @param  DateTime $datetime2
+ * @return string
+ */
+function time_diff($datetime1, $datetime2)
+{
+    $interval = $datetime1->diff($datetime2);
+    $h = $interval->format('%h');
+    $i = $interval->format('%i');
+    $s = $interval->format('%s');
+    $u = ($datetime2->format('u') + 1000000) - $datetime1->format('u');
+    if ($u >= 1000000) {
+        $u = ($u - 1000000);
+        $s++;
+    }
+    return "{$h}:{$i}:{$s}.{$u}";
 }
