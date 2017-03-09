@@ -11,6 +11,7 @@ function cdn_asset($asset)
     if (env('APP_ENV') == 'local') {
         return asset($asset);
     } else {
+        if ($asset[0] != "/") $asset = "/{$asset}";
         return env('AWS_CLOUDFRONT_ENDPOINT') . $asset;
     }
 }
