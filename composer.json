@@ -15,7 +15,10 @@
     },
     "autoload": {
         "files": [
-            "src/helpers.php"
+            "src/assets.php",
+            "src/request.php",
+            "src/datetime.php",
+            "src/geo.php"
         ]
     }
 }
