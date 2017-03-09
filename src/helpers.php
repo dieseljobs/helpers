@@ -9,7 +9,7 @@
 function cdn_asset($asset)
 {
     if (env('APP_ENV') == 'local') {
-        return env('DOMAIN_PRIMARY') . $asset;
+        return asset($asset);
     } else {
         return env('AWS_CLOUDFRONT_ENDPOINT') . $asset;
     }
@@ -73,7 +73,7 @@ function route_param($key)
 {
     $route_params = request()->route()->parameters();
     if (isset($route_params[$key])) {
-        return request()->route()->parameters()[$key];
+        return $route_params[$key];
     } else {
         return null;
     }
