@@ -50,6 +50,23 @@ function route_param($key)
 }
 
 /**
+ * Get query string
+ * Pull from request uri, load balancers send duplicate QUERY_STRING
+ *
+ * @return string 
+ */
+function query_string()
+{
+    $uri = request()->server('REQUEST_URI');
+    $pieces = preg_split("/\?/", $uri);
+    if (isset($pieces[1])) {
+        return $pieces[1];
+    } else {
+        return "";
+    }
+}
+
+/**
  * Determine if request is coming from human based on user-agent
  *
  * @param  string|null  $agent
