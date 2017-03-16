@@ -24,13 +24,12 @@ function client_ip()
  */
 function is_ajax()
 {
-    return request()->ajax();
-    /*
     return (bool)preg_match(
         "#application\/json#i",
         request()->header("content-type")
     );
-    */
+    // Larave's request()->ajax() doesn't seem to be consistent, why is that?
+    // return request()->ajax();
 }
 
 /**
@@ -53,7 +52,7 @@ function route_param($key)
  * Get query string
  * Pull from request uri, load balancers send duplicate QUERY_STRING
  *
- * @return string 
+ * @return string
  */
 function query_string()
 {
