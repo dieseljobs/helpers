@@ -8,12 +8,20 @@
  */
 function client_ip()
 {
+    // catch ip spoofer if present
+    if ( $spoof_ip = env('SPOOF_IP') ) return $spoof_ip;
+
+    // otherwise process for request
     $request = request();
+
+    // catch requests forwarded by load balancer
     if ($request->server('HTTP_X_FORWARDED_FOR')) {
         $clientIpAddress = $request->server('HTTP_X_FORWARDED_FOR');
+    // else get normal request
     } else {
         $clientIpAddress = $request->server('REMOTE_ADDR');
     }
+
     return $clientIpAddress;
 }
 
@@ -75,5 +83,6 @@ function is_human($agent = null)
 {
     $agent = ($agent) ? $agent : request()->header('User-Agent');
     $pttrn = '#(bot|google|crawler|spider|prerender|facebookexternalhit)#i';
+    
     return (!preg_match($pttrn, $agent) and !is_null($agent));
 }
