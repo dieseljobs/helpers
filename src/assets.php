@@ -8,7 +8,10 @@
  */
 function cdn_asset($asset)
 {
-    if (env('APP_ENV') == 'local') {
+    if (
+        env('APP_ENV') !== 'production' ||
+        env('AWS_CLOUDFRONT_ENDPOINT') === null
+    ) {
         return asset($asset);
     } else {
         if ($asset[0] != "/") $asset = "/{$asset}";
@@ -24,7 +27,7 @@ function cdn_asset($asset)
  */
 function versioned_asset($asset)
 {
-    if (env('APP_ENV') == 'local') {
+    if (env('APP_ENV') !== 'production') {
         return asset($asset);
     } else {
         return cdn_asset(elixir($asset));
