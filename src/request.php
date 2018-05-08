@@ -9,7 +9,7 @@
 function client_ip()
 {
     // catch ip spoofer if present
-    if ( $spoof_ip = env('SPOOF_IP') ) return $spoof_ip;
+    if ( $spoof_ip = config('app.spoof_ip') ) return $spoof_ip;
 
     // otherwise process for request
     $request = request();
@@ -36,8 +36,6 @@ function is_ajax()
         "#application\/json#i",
         request()->header("content-type")
     );
-    // Larave's request()->ajax() doesn't seem to be consistent, why is that?
-    // return request()->ajax();
 }
 
 /**
@@ -83,6 +81,6 @@ function is_human($agent = null)
 {
     $agent = ($agent) ? $agent : request()->header('User-Agent');
     $pttrn = '#(bot|google|crawler|spider|prerender|facebookexternalhit)#i';
-    
+
     return (!preg_match($pttrn, $agent) and !is_null($agent));
 }
