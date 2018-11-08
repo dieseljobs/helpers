@@ -22,7 +22,7 @@ function client_ip()
         $clientIpAddress = $request->server('REMOTE_ADDR');
     }
 
-    return $clientIpAddress;
+    return explode(', ', $clientIpAddress)[0];
 }
 
 /**
